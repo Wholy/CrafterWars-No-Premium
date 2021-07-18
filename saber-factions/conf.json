@@ -19,7 +19,7 @@
   "powerPerMinute": 0.2,
   "powerPerDeath": 4.0,
   "powerRegenOffline": false,
-  "powerOfflineLossPerDay": 6.0,
+  "powerOfflineLossPerDay": 3.0,
   "powerOfflineLossLimit": 0.0,
   "powerFactionMax": 0.0,
   "prefixLeader": "§e[§fOWNER§e]§r",
