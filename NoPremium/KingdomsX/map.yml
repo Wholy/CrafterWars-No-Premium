@@ -1,0 +1,444 @@
+#|-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-|#
+#|++++++++++++++++++++++++++++++++++++++++++++++++++++++|#
+#|                         Map                         |#
+#|++++++++++++++++++++++++++++++++++++++++++++++++++++|#
+#|-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-|#
+
+# Default size of the map. Players can adjust their own size using /k map command.
+height: 4
+width: 12
+
+# The limit of map that the players can set using /k map command.
+limit:
+  height: 10
+  width: 20
+
+# Only allow players that have a kingdom to use this command.
+kingdom-member-only: false
+
+# Message shown before and after the map.
+header: "   {$sep}&m&l-{$s}&l&m--=[{$sep}&l&m--&r {$p}&l{$$maps.name}&r {$sep}&l&m--{$s}&l&m]=--{$sep}&l&m-&r"
+footer: "{$sep}&m&l--{$s}&l&m-=[&c✦{$s}&l&m]=--&e&l&m--{$s}&l&m--=[&c✦{$s}&l&m]=-{$sep}&l&m--"
+
+# Space at the beginning of the map elements.
+begin: "      "
+# Distance between each map element.
+distance: ""
+# The direction shown in the map.
+compass: "   {$sp}%compass%"
+
+scoreboard:
+  # Scoreboard text alignments usually tent to be weird, so separate messages are desirable.
+  header: "{$sep}&m&l-{$s}&l&m--=[{$sep}&l&m--&r {$p}&l{$$maps.name}&r {$sep}&l&m--{$s}&l&m]=--{$sep}&l&m-&r"
+  begin: "   "
+
+# You can get some symbols here https://coolsymbol.com/    -   https://unicode.org/charts/nameslist/n_25A0.html
+# hover: The lore shown when you hover on the element icon.
+# action: Hover actions. You can read about it here: https://github.com/CryptoMorin/KingdomsX/wiki/Config#actions
+# item: This is used for the GUI map. The name of the item is the first entry of the hover option and the lore is the rest of the hover option.
+#       The material of the item is determined by the structure's block type (considering their level too) or specified here if not related to a structure.
+# Some people might also find using "⬛" or "■" appealing, the only disadvantage is that, there aren't many varieties of squares with this size.
+# Characters with the same size: ◉
+# When using GUIs, the "action" option also continues to work if it's a command (not a suggestion or a URL)
+elements:
+  protected:
+    icon: "&4▩"
+    hover:
+      - "&cProtected region"
+      - &loc "{$s}Location{$colon} {$p}%loc_x%{$sep}, {$p}%loc_z% {$sep}({$s}Chunk{$colon} {$p}%X%{$sep}, {$p}%Z%{$sep})"
+    item:
+      material: PURPLE_WOOL
+  you:
+    icon: "{$p}◈"
+    hover: [ "{$s}You{$colon} {$p}%X%{$sep}, {$p}%Z%" ]
+    item:
+      material: COMPASS
+  wilderness:
+    icon: "{$sep}▩"
+    action: "/k claim %X% %Z%"
+    hover: [ "{$sep}Click to claim.", *loc ]
+    item:
+      material: WHITE_WOOL
+  outpost-break-confirm:
+    icon: "&3▩"
+    hover:
+      - "&cRemoving the structure will cause"
+      - "this land to get unclaimed."
+      - *loc
+    item:
+      material: CYAN_WOOL
+  clipboard:
+    added:
+      icon: "&5▩"
+      action: "/k claim clipboard remove %X% %Z%"
+      hover: [ "{$sep}Click to remove from the clipboard.", *loc ]
+      item:
+        material: PINK_WOOL
+    failed:
+      icon: "&c▩"
+      action: "/k claim clipboard remove %X% %Z%"
+      hover:
+        - "{$desc}Failed to claim this land."
+        - "{$desc}It's not necessary to remove it"
+        - "{$desc}from the clipboard."
+        - ""
+        - "&c%reason%"
+        - ""
+        - *loc
+      item:
+        material: RED_WOOL
+    wilderness:
+      icon: "{$sep}▩"
+      action: "/k claim clipboard add %X% %Z%"
+      hover:
+        - "{$sep}Click to add to the clipboard."
+        - *loc
+      item:
+        material: WHITE_WOOL
+  invasion:
+    icon: "&4▩"
+    hover:
+      - "&cOngoing invasion in &e%other*kingdoms_kingdom_name%'s &cland."
+      - *loc
+    item:
+      material: RED_WOOL
+  nation-zone:
+    self:
+      icon: "{$p}◉"
+      action: "/k claim %X% %Z%"
+      hover:
+        - "&a%kingdoms_nation_name%'s Nation Zone"
+        - "{$desc}Click to claim."
+        - *loc
+      item:
+        material: GREEN_TERRACOTTA
+    ally:
+      icon: "{$s}◉"
+      hover:
+        - "{$s}%other*kingdoms_nation_name%'s Nation Zone"
+        - *loc
+      item:
+        material: ORANGE_TERRACOTTA
+    truce:
+      icon: "&e◉"
+      hover:
+        - "&e%other*kingdoms_nation_name%'s Nation Zone"
+        - *loc
+      item:
+        material: YELLOW_TERRACOTTA
+    neutral:
+      icon: "&f◉"
+      hover:
+        - "&f%other*kingdoms_nation_name%'s Nation Zone"
+        - *loc
+      item:
+        material: GRAY_TERRACOTTA
+    enemy:
+      icon: "&c◉"
+      hover:
+        - "&c%other*kingdoms_nation_name%'s Nation Zone"
+        - *loc
+      item:
+        material: RED_TERRACOTTA
+
+  land:
+    self:
+      icon: "{$p}▩"
+      action: "/k unclaim %X% %Z%"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+        - "{$sep}Click to unclaim."
+      item:
+        material: GREEN_WOOL
+    ally:
+      icon: "{$s}▩"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+      item:
+        material: ORANGE_WOOL
+    truce:
+      icon: "&e▩"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+      item:
+        material: YELLOW_WOOL
+    neutral:
+      icon: "&f▩"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+      item:
+        material: GRAY_WOOL
+    enemy:
+      icon: "&c▩"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+      item:
+        material: RED_WOOL
+    nation:
+      icon: "{$sp}▩"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Land"
+        - *loc
+      item:
+        material: BLUE_WOOL
+  nexus:
+    priority: 2
+    self:
+      icon: "{$p}▣"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+    ally:
+      icon: "{$s}▣"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+    truce:
+      icon: "&e▣"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+    neutral:
+      icon: "&f▣"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+    enemy:
+      icon: "&c▣"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+    nation:
+      icon: "{$sp}▣"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Nexus"
+        - *loc
+  national-nexus:
+    priority: 1
+    self:
+      icon: "{$p}▣"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+    ally:
+      icon: "{$s}▣"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+    truce:
+      icon: "&e▣"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+    neutral:
+      icon: "&f▣"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+    enemy:
+      icon: "&c▣"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+    nation:
+      icon: "{$sp}▣"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s National Nexus"
+        - *loc
+  powercell:
+    priority: 3
+    self:
+      icon: "{$p}⊠"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+    ally:
+      icon: "{$s}⊠"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+    truce:
+      icon: "&e⊠"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+    neutral:
+      icon: "&f⊠"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+    enemy:
+      icon: "&c⊠"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+    nation:
+      icon: "{$sp}⊠"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Powercell"
+        - *loc
+  extractor:
+    priority: 5
+    self:
+      icon: "{$p}▨"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+    ally:
+      icon: "{$s}▨"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+    truce:
+      icon: "&e▨"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+    neutral:
+      icon: "&f▨"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+    enemy:
+      icon: "&c▨"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+    nation:
+      icon: "{$sp}▨"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Extractor"
+        - *loc
+  outpost:
+    priority: 7
+    self:
+      icon: "{$p}▤"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+    ally:
+      icon: "{$s}▤"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+    truce:
+      icon: "&e▤"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+    neutral:
+      icon: "&f▤"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+    enemy:
+      icon: "&c▤"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+    nation:
+      icon: "{$sp}▤"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Outpost"
+        - *loc
+  warppad:
+    priority: 5
+    self:
+      icon: "{$p}▥"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+    ally:
+      icon: "{$s}▥"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+    truce:
+      icon: "&e▥"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+    neutral:
+      icon: "&f▥"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+    enemy:
+      icon: "&c▥"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+    nation:
+      icon: "{$sp}▥"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Warppad"
+        - *loc
+  regulator:
+    priority: 4
+    self:
+      icon: "{$p}▦"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+    ally:
+      icon: "{$s}▦"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+    truce:
+      icon: "&e▦"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+    neutral:
+      icon: "&f▦"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+    enemy:
+      icon: "&c▦"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+    nation:
+      icon: "{$sp}▦"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Regulator"
+        - *loc
+  siege-cannon:
+    priority: 8
+    self:
+      icon: "{$p}▦"
+      hover:
+        - "&a%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc
+    ally:
+      icon: "{$s}▦"
+      hover:
+        - "{$s}%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc
+    truce:
+      icon: "&e▦"
+      hover:
+        - "&e%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc
+    neutral:
+      icon: "&f▦"
+      hover:
+        - "&f%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc
+    enemy:
+      icon: "&c▦"
+      hover:
+        - "&c%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc
+    nation:
+      icon: "{$sp}▦"
+      hover:
+        - "{$sp}%other*kingdoms_kingdom_name%'s Siege Cannon"
+        - *loc

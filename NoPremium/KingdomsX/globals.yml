@@ -1,0 +1,7 @@
+config-migration:
+  last-fresh-version: 1.17.21-BETA
+updates:
+  languages: {}
+prolonged-tasks:
+  masswar: 1762279549716
+  daily-checks: 1762344000022
